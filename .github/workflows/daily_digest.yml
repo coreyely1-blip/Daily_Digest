@@ -1,0 +1,33 @@
+name: Daily Digest Email
+
+on:
+  schedule:
+    # 12:00 PM UTC = 7:00 AM Eastern (EST)
+    # Note: During EDT (Mar-Nov), this delivers at 8 AM ET.
+    # Change to "0 11 * * *" during daylight saving if you want 7 AM EDT.
+    - cron: "0 12 * * *"
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Send Daily Digest
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          TIMEZONE: America/New_York
+        run: python daily_digest.py
