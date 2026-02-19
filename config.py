@@ -1,0 +1,65 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Email configuration
+GMAIL_ADDRESS = os.getenv("GMAIL_ADDRESS", "coreyely1@gmail.com")
+GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "")
+RECIPIENT_EMAIL = os.getenv("RECIPIENT_EMAIL", GMAIL_ADDRESS)
+TIMEZONE = os.getenv("TIMEZONE", "America/New_York")
+
+# News RSS feeds
+NEWS_SOURCES = {
+    "Top US News": {
+        "feeds": [
+            "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml",
+            "https://feeds.npr.org/1001/rss.xml",
+        ],
+        "count": 5,
+    },
+    "Top European News": {
+        "feeds": [
+            "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
+        ],
+        "count": 5,
+    },
+    "Top African News": {
+        "feeds": [
+            "https://feeds.bbci.co.uk/news/world/africa/rss.xml",
+        ],
+        "count": 5,
+    },
+    "Top China News": {
+        "feeds": [
+            "https://feeds.bbci.co.uk/news/world/asia/china/rss.xml",
+        ],
+        "count": 5,
+    },
+    "English Premier League News": {
+        "feeds": [
+            "https://feeds.bbci.co.uk/sport/football/premier-league/rss.xml",
+            "https://news.google.com/rss/search?q=%22Premier+League%22+when:1d&hl=en-US&gl=US&ceid=US:en",
+        ],
+        "count": 5,
+    },
+    "West Ham United News": {
+        "feeds": [
+            "https://news.google.com/rss/search?q=%22West+Ham%22+Premier+League+OR+transfer+OR+match+OR+manager+when:3d&hl=en-US&gl=US&ceid=US:en",
+        ],
+        "count": 2,
+    },
+}
+
+# ESPN API endpoints for scores
+SCORE_ENDPOINTS = {
+    "English Premier League": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard",
+    "Champions League": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard",
+    "Europa League": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.europa/scoreboard",
+    "FA Cup": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.fa/scoreboard",
+    "Carabao Cup": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.league_cup/scoreboard",
+    "EFL Championship": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.2/scoreboard",
+    "NBA": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+    "College Football": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard",
+    "College Basketball": "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard",
+}
