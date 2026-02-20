@@ -63,3 +63,8 @@ SCORE_ENDPOINTS = {
     "College Football": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard",
     "College Basketball": "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard",
 }
+
+# College sports filter: only show games where at least one team is
+# ranked in the Top 25 or is one of these favorite teams.
+COLLEGE_LEAGUES = {"College Football", "College Basketball"}
+COLLEGE_FAVORITE_TEAMS = {"Oregon Ducks"}

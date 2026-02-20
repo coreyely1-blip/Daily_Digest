@@ -1,7 +1,7 @@
 import requests
 import logging
 from datetime import datetime, timedelta, timezone
-from config import SCORE_ENDPOINTS
+from config import SCORE_ENDPOINTS, COLLEGE_LEAGUES, COLLEGE_FAVORITE_TEAMS
 
 logger = logging.getLogger(__name__)
 
@@ -99,6 +99,19 @@ def _parse_football_event(event):
     return _parse_basketball_event(event)
 
 
+def _is_college_game_relevant(event):
+    """Check if a college game involves a Top 25 team or a favorite team."""
+    competitors = event.get("competitions", [{}])[0].get("competitors", [])
+    for c in competitors:
+        team_name = c.get("team", {}).get("displayName", "")
+        if team_name in COLLEGE_FAVORITE_TEAMS:
+            return True
+        rank = c.get("curatedRank", {}).get("current", 99)
+        if rank <= 25:
+            return True
+    return False
+
+
 def fetch_scores_for_league(league_name, endpoint_url):
     """Fetch completed scores for a league over the past 24 hours.
 
@@ -128,12 +141,16 @@ def fetch_scores_for_league(league_name, endpoint_url):
         if not data:
             continue
 
+        is_college = league_name in COLLEGE_LEAGUES
         events = data.get("events", [])
         for event in events:
             event_id = event.get("id")
             if event_id in seen_event_ids:
                 continue
             seen_event_ids.add(event_id)
+
+            if is_college and not _is_college_game_relevant(event):
+                continue
 
             if is_soccer:
                 score = _parse_soccer_event(event)
