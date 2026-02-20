@@ -13,32 +13,32 @@ TIMEZONE = os.getenv("TIMEZONE", "America/New_York")
 NEWS_SOURCES = {
     "Top US News": {
         "feeds": [
-            "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml",
             "https://feeds.npr.org/1001/rss.xml",
+            "https://news.google.com/rss/search?q=United+States+news+when:1d&hl=en-US&gl=US&ceid=US:en",
         ],
         "count": 5,
     },
     "Top European News": {
         "feeds": [
-            "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
+            "https://www.aljazeera.com/xml/rss/all.xml",
+            "https://news.google.com/rss/search?q=Europe+news+when:1d&hl=en-US&gl=US&ceid=US:en",
         ],
         "count": 5,
     },
     "Top African News": {
         "feeds": [
-            "https://feeds.bbci.co.uk/news/world/africa/rss.xml",
+            "https://news.google.com/rss/search?q=Africa+news+when:1d&hl=en-US&gl=US&ceid=US:en",
         ],
         "count": 5,
     },
     "Top China News": {
         "feeds": [
-            "https://feeds.bbci.co.uk/news/world/asia/china/rss.xml",
+            "https://news.google.com/rss/search?q=China+news+when:1d&hl=en-US&gl=US&ceid=US:en",
         ],
         "count": 5,
     },
     "English Premier League News": {
         "feeds": [
-            "https://feeds.bbci.co.uk/sport/football/premier-league/rss.xml",
             "https://news.google.com/rss/search?q=%22Premier+League%22+when:1d&hl=en-US&gl=US&ceid=US:en",
         ],
         "count": 5,
