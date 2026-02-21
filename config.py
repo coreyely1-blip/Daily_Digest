@@ -68,3 +68,8 @@ SCORE_ENDPOINTS = {
 # ranked in the Top 25 or is one of these favorite teams.
 COLLEGE_LEAGUES = {"College Football", "College Basketball"}
 COLLEGE_FAVORITE_TEAMS = {"Oregon Ducks"}
+
+# News sources to exclude from the digest
+BLOCKED_NEWS_SOURCES = {
+    "Fox News",
+}

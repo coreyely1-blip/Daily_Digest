@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 import logging
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
-from config import NEWS_SOURCES
+from config import NEWS_SOURCES, BLOCKED_NEWS_SOURCES
 
 logger = logging.getLogger(__name__)
 
@@ -126,10 +126,13 @@ def fetch_news_section(section_name, feed_urls, count):
 
             for item in items:
                 title, link, description = _extract_item_fields(item)
+                source = _extract_source(item, feed_title)
+                if source in BLOCKED_NEWS_SOURCES:
+                    continue
                 article = {
                     "title": title,
                     "link": link,
-                    "source": _extract_source(item, feed_title),
+                    "source": source,
                     "published": _parse_published(item),
                     "description": description,
                 }
