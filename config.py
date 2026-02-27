@@ -72,8 +72,7 @@ COLLEGE_FAVORITE_TEAMS = {"Oregon Ducks"}
 RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY", "")
 JOB_SEARCH_QUERY = os.getenv("JOB_SEARCH_QUERY", "Senior Financial Analyst")
 JOB_MIN_SALARY = int(os.getenv("JOB_MIN_SALARY", "100000"))
-JOB_MAX_EXPERIENCE_YEARS = int(os.getenv("JOB_MAX_EXPERIENCE_YEARS", "4"))
-JOB_RESULT_COUNT = int(os.getenv("JOB_RESULT_COUNT", "5"))
+JOB_RESULT_COUNT = int(os.getenv("JOB_RESULT_COUNT", "15"))
 
 # Only include articles from these news sources
 ALLOWED_NEWS_SOURCES = {
