@@ -1,7 +1,7 @@
 """Fetch job listings from the JSearch API (RapidAPI).
 
 Searches for jobs matching configured criteria and filters results
-by salary, experience, and remote eligibility.
+by salary and remote eligibility.
 """
 
 import logging
@@ -13,7 +13,6 @@ from config import (
     RAPIDAPI_KEY,
     JOB_SEARCH_QUERY,
     JOB_MIN_SALARY,
-    JOB_MAX_EXPERIENCE_YEARS,
     JOB_RESULT_COUNT,
 )
 
@@ -22,7 +21,7 @@ logger = logging.getLogger(__name__)
 JSEARCH_URL = "https://jsearch.p.rapidapi.com/search"
 
 
-def _is_within_date_range(posted_at_str, max_days=2):
+def _is_within_date_range(posted_at_str, max_days=7):
     """Check if a job was posted within the last *max_days* days."""
     if not posted_at_str:
         return False
@@ -54,25 +53,7 @@ def _meets_salary_requirement(job, min_salary):
         if min_sal * multiplier >= min_salary:
             return True
 
-    # If no salary data is available, exclude the job
-    return False
-
-
-def _meets_experience_requirement(job, max_years):
-    """Return True if the job requires no more than *max_years* of experience."""
-    exp_info = job.get("job_required_experience") or {}
-    required_months = exp_info.get("required_experience_in_months")
-
-    if required_months is not None:
-        return required_months <= max_years * 12
-
-    # If experience isn't structured, check if it's explicitly mentioned
-    if not exp_info.get("experience_mentioned", False):
-        # No experience info at all – include the job
-        return True
-
-    # Experience is mentioned but not structured; include it and let the
-    # reader decide (better to show a borderline match than miss a good one).
+    # If no salary data is available, include the job anyway
     return True
 
 
@@ -111,8 +92,8 @@ def fetch_jobs():
     params = {
         "query": f"{JOB_SEARCH_QUERY} remote in United States",
         "page": "1",
-        "num_pages": "3",
-        "date_posted": "3days",
+        "num_pages": "5",
+        "date_posted": "week",
         "remote_jobs_only": "true",
         "country": "us",
     }
@@ -131,16 +112,12 @@ def fetch_jobs():
 
     filtered = []
     for job in raw_jobs:
-        # Must be posted in the last 2 days
-        if not _is_within_date_range(job.get("job_posted_at_datetime_utc"), max_days=2):
+        # Must be posted in the last 7 days
+        if not _is_within_date_range(job.get("job_posted_at_datetime_utc"), max_days=7):
             continue
 
-        # Must meet salary requirement
+        # Must meet salary requirement (jobs with no salary listed are included)
         if not _meets_salary_requirement(job, JOB_MIN_SALARY):
-            continue
-
-        # Must meet experience requirement
-        if not _meets_experience_requirement(job, JOB_MAX_EXPERIENCE_YEARS):
             continue
 
         # Format posted date
