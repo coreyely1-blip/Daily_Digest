@@ -4,7 +4,7 @@ from datetime import datetime
 
 import pytz
 
-from config import TIMEZONE, JOB_SEARCH_QUERY, JOB_MIN_SALARY, JOB_MAX_EXPERIENCE_YEARS
+from config import TIMEZONE, JOB_SEARCH_QUERY, JOB_MIN_SALARY
 
 
 def _get_formatted_date():
@@ -112,7 +112,6 @@ def build_jobs_email(jobs):
     criteria_html = (
         f"<strong>Role:</strong> {JOB_SEARCH_QUERY} &bull; "
         f"<strong>Salary:</strong> ${JOB_MIN_SALARY:,}+ &bull; "
-        f"<strong>Experience:</strong> {JOB_MAX_EXPERIENCE_YEARS} yrs max &bull; "
         f"<strong>Location:</strong> Remote (US)"
     )
 
