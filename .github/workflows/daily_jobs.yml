@@ -1,11 +1,11 @@
 name: Daily Job Alert Email
 
 on:
-  schedule:
-    # 3:00 PM UTC = 10:00 AM Eastern (EST)
-    # During EDT (Mar-Nov), this delivers at 11 AM ET.
-    # Change to "0 14 * * *" during daylight saving if you want 10 AM EDT.
-    - cron: "0 15 * * *"
+  # schedule:
+  #   # 3:00 PM UTC = 10:00 AM Eastern (EST)
+  #   # During EDT (Mar-Nov), this delivers at 11 AM ET.
+  #   # Change to "0 14 * * *" during daylight saving if you want 10 AM EDT.
+  #   - cron: "0 15 * * *"
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
 jobs:
